@@ -1,29 +1,31 @@
 {
   "name": "confess",
   "version": "1.0.0",
-  "description": "An anonymous confession bot for your server !",
+  "description": "A discord bot for anonymous confessions",
   "main": "index.js",
   "scripts": {
-    "test": "PheoxConfess"
+    "test": "contest",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://gitlab.com/Daystar/confess.git"
+    "url": "git+https://github.com/10YAR/Confess.git"
   },
   "keywords": [
-    "confess",
-    "discord",
-    "bot",
     "confession",
-    "anonymous"
+    "anonymous",
+    "discord",
+    "bot"
   ],
-  "author": "Pheox",
+  "author": "10YAR",
   "license": "ISC",
   "bugs": {
-    "url": "https://gitlab.com/Daystar/confess/issues"
+    "url": "https://github.com/10YAR/Confess/issues"
   },
-  "homepage": "https://gitlab.com/Daystar/confess#readme",
+  "homepage": "https://github.com/10YAR/Confess#readme",
   "dependencies": {
-    "discord.js": "^12.5.1"
+    "axios": "^1.2.0",
+    "discord.js": "^14.7.0",
+    "dotenv": "^16.0.3"
   }
 }
