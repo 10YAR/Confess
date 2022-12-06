@@ -16,7 +16,6 @@ client.on('interactionCreate', async interaction => {
         }
     }
 
-
     if (interaction.commandName === 'help') {
 
         const helpMsgEmbed = new EmbedBuilder()
@@ -39,10 +38,16 @@ client.on('interactionCreate', async interaction => {
     }
 
     if (interaction.commandName === 'setchannel') {
-        if (await hasMessagePermission(interaction.channel)) {
+        if (interaction.channel.type !== 1 && await hasMessagePermission(interaction.channel)) {
             await setChannel(interaction.guild.id, interaction.guild.name, interaction.channel.id);
             try {
                 interaction.reply('Channel set!');
+            } catch (error) {
+                console.error(error);
+            }
+        } else {
+            try {
+                interaction.reply('Please use this command in a server channel!');
             } catch (error) {
                 console.error(error);
             }
@@ -176,12 +181,14 @@ async function setChannel(guildId, guildName, channelId) {
     try {
         db.query("SELECT * FROM servers WHERE guild_id = ?", [guildId], (err, result) => {
             if (result[0] == null) {
-                db.query("INSERT INTO servers (guild_id, guild_name, channel_id) VALUES ('" + guildId + "', '" + guildName + "', '" + channelId + "')", function (err, result, fields) {
+                db.query("INSERT INTO servers (guild_id, guild_name, channel_id) VALUES (?, ?, ?)", [guildId, guildName, channelId],
+                    function (err, result, fields) {
                     if (err) throw err;
                     console.log("Channel set! (" + guildId + ") " + guildName + " - (" + channelId + ")");
                 });
             } else {
-                db.query("UPDATE servers SET channel_id = '" + channelId + "' WHERE guild_id = '" + guildId + "'", function (err, result, fields) {
+                db.query("UPDATE servers SET channel_id = ? WHERE guild_id = ?", [channelId, guildId],
+                    function (err, result, fields) {
                     if (err) throw err;
                     console.log("Channel updated! (" + guildId + ") " + guildName + " - (" + channelId + ")");
                 });
@@ -194,7 +201,8 @@ async function setChannel(guildId, guildName, channelId) {
 
 async function saveConfession(confession, userId, username, discriminator, guildId, status = 'SENT') {
     try {
-        db.query("INSERT INTO confessions (confession, user_id, username, guild_id, status) VALUES ('" + confession + "', '" + userId + "', '" + username + "#" + discriminator + "', '" + guildId + "', '" + status + "')", function (err, result, fields) {
+        db.query("INSERT INTO confessions (confession, user_id, username, guild_id, status) VALUES (?, ?, ?, ?, ?)",
+            [confession, userId, username + "#" + discriminator, guildId, status], function (err, result, fields) {
             if (err) throw err;
             console.log("Confession saved! (SERVER: " + guildId + ") - (USER: " + userId + ") " + username + "#" + discriminator + "(" + status + ")");
         });
