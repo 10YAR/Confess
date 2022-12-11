@@ -3,6 +3,19 @@ import {db} from "../config/mysql.js";
 import {PermissionsBitField, EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder} from "discord.js";
 import { randomEmoji } from "../libs/random-emoji.js";
 
+/*client.on('guildCreate', (g) => {
+    const channel = g.channels.cache.find(channel => channel.type === 'GUILD_TEXT' && hasMessagePermission(channel))
+    console.log(channel);
+    try {
+        setChannel(channel.guild.id, channel.guild.name, channel.channel.id).then(r => {
+            channel.send("Thank you for inviting me! To set the confession channel, type the /setchannel command while being in the channel.");
+        });
+    } catch (error) {
+        console.log(error);
+    }
+});*/
+
+
 client.on('interactionCreate', async interaction => {
     if (!interaction.isChatInputCommand()) return;
 
