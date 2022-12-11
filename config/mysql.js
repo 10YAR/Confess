@@ -1,7 +1,7 @@
 import * as mysql from 'mysql';
 import {MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE} from './constants.js'
 
-export const db = mysql.createConnection({
+export const db = mysql.createPool({
     host: MYSQL_HOST,
     user: MYSQL_USER,
     password: MYSQL_PASSWORD,
@@ -9,8 +9,5 @@ export const db = mysql.createConnection({
     charset: 'utf8mb4'
 });
 
-db.connect(function(err) {
-    if (err) throw err;
-    console.log("MySQL Connection OK");
-});
+
 
