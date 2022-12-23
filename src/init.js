@@ -1,16 +1,18 @@
 import {CLIENT_ID, BOT_TOKEN} from '../config/constants.js'
 import {Client, REST, Routes, IntentsBitField, Partials} from "discord.js";
-import {commands} from "./commands.js";
+import { allCommands } from "./commands.js";
 
 const rest = new REST({version: '10'}).setToken(BOT_TOKEN);
 
+
 (async () => {
     try {
-        await rest.put(Routes.applicationCommands(CLIENT_ID), {body: commands});
+        await rest.put(Routes.applicationCommands(CLIENT_ID), {body: allCommands});
     } catch (error) {
         console.error(error);
     }
 })();
+
 
 export const client = new Client({
     intents: [
