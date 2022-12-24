@@ -212,11 +212,11 @@ client.on('interactionCreate', async interaction => {
 
                                             if (serverChannel != null) {
                                                 const confessionEmbed = new EmbedBuilder()
-                                                    .setTitle(guildRes[0].title ?? "New confession !")
                                                     .setDescription(confession)
-                                                    .setColor(color)
-                                                    .setTimestamp()
-                                                    .setFooter({text: guildRes[0].footer ?? "ConfessBot", iconURL: "https://cdn.discordapp.com/app-icons/796832150853779456/a97e04a3249e940fceb5a847e2e1ee89.png"});
+                                                    .setColor(color);
+                                                if (guildRes[0].title != null) confessionEmbed.setTitle(guildRes[0].title ?? "New confession !")
+                                                if (guildRes[0].footer != null)
+                                                    confessionEmbed.setFooter({text: guildRes[0].footer ?? "ConfessBot", iconURL: "https://cdn.discordapp.com/app-icons/796832150853779456/a97e04a3249e940fceb5a847e2e1ee89.png"});
 
                                                 await serverChannel.send({embeds: [confessionEmbed]});
                                                 await saveConfession(confession, interaction.user.id, interaction.user.username, interaction.user.discriminator, guildId, 'SENT');
