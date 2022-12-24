@@ -41,7 +41,7 @@ client.on('interactionCreate', async interaction => {
 
     if (interaction.commandName === 'customize') {
         if (await hasAdminPermission(interaction)) {
-            if (interaction.channel.type === 0) {
+            if (interaction.channel.type !== 1) {
                 const theGuild = await checkGuildExist(interaction.guild.id);
                 const color = (theGuild != null) ? JSON.parse(theGuild[0].color) : [66, 84, 121];
                 let subCommand;
