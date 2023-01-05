@@ -170,8 +170,9 @@ client.on('interactionCreate', async interaction => {
 
                             const guilds = [];
                             const cacheGuilds = await interaction.client.guilds.cache;
+                            const memberId = await interaction.user;
                             for (const [, guild] of cacheGuilds) {
-                                await guild.members.fetch(interaction.user).then(() => guilds.push(guild)).catch(error => console.log(error));
+                                await guild.members.fetch(memberId).then(() => guilds.push(guild)).catch(error => console.log(error));
                             }
 
                             const selectServers = [];
