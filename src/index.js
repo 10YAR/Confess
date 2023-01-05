@@ -169,7 +169,8 @@ client.on('interactionCreate', async interaction => {
                         .then(async collected => {
 
                             const guilds = [];
-                            for (const [, guild] of interaction.client.guilds.cache) {
+                            const cacheGuilds = await interaction.client.guilds.cache;
+                            for (const [, guild] of cacheGuilds) {
                                 await guild.members.fetch(interaction.user).then(() => guilds.push(guild)).catch(error => console.log(error));
                             }
 
@@ -198,7 +199,7 @@ client.on('interactionCreate', async interaction => {
                             // STEP 4 : Sending and Saving Confession
                             interaction.channel.awaitMessageComponent({componentType: 3, time: 15000})
                                 .then(async collected => {
-                                    collected.deferUpdate();
+                                    await collected.deferUpdate();
 
                                     const guildId = collected.values[0];
                                     const guildRes = await checkGuildExist(guildId);
