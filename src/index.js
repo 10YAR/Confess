@@ -14,9 +14,8 @@ client.on('interactionCreate', async interaction => {
     if (interaction.commandName === 'help') {
         let theGuild;
 
-        if (interaction.channel.type === 0)
-            theGuild = await checkGuildExist(interaction.guild.id);
-        const color = (theGuild != null) ? JSON.parse(theGuild[0].color) : [66, 84, 121];
+        if (interaction.channel.type === 0) theGuild = await checkGuildExist(interaction.guild.id);
+        const color = (theGuild[0] != null && theGuild[0].color !== undefined) ? JSON.parse(theGuild[0].color) : [66, 84, 121];
 
         const helpMsgEmbed = new EmbedBuilder()
             .setTitle('Confess Bot')
@@ -43,7 +42,7 @@ client.on('interactionCreate', async interaction => {
         if (await hasAdminPermission(interaction)) {
             if (interaction.channel.type !== 1) {
                 const theGuild = await checkGuildExist(interaction.guild.id);
-                const color = (theGuild != null) ? JSON.parse(theGuild[0].color) : [66, 84, 121];
+                const color = (theGuild[0] != null && theGuild[0].color !== undefined) ? JSON.parse(theGuild[0].color) : [66, 84, 121];
                 let subCommand;
                 try {
                     subCommand = interaction.options.getSubcommand();
